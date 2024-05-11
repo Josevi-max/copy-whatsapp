@@ -35,7 +35,7 @@
                         <h2 class="text-teal-600 text lg">Contáctos</h2>
 
                         <ul class="space-y-4 pt-4">
-                            @forelse ($this->userContacts as $contact)
+                            @forelse ($this->getContactsProperty() as $contact)
                                 <li class="cursor-pointer" wire:click="open_chat_contact({{ $contact }})">
                                     <div class="flex">
                                         <figure class="flex-shrink-0">
