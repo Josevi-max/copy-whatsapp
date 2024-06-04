@@ -127,12 +127,16 @@ class ChatComponent extends Component
     public function updating($property, $value)
     {
         if ($property === 'bodyMessage') {
-            Notification::send($this->getUserNotification(), new \App\Notifications\UserTyping($this->chat->id,true));
+            if(isset($this->chat->id)) {
+                Notification::send($this->getUserNotification(), new \App\Notifications\UserTyping($this->chat->id,true));
+            }
         }
     }
 
     public function isNotTyping(){
-        Notification::send($this->getUserNotification(), new \App\Notifications\UserTyping($this->chat->id,false));
+        if(isset($this->chat->id)){
+            Notification::send($this->getUserNotification(), new \App\Notifications\UserTyping($this->chat->id,false));
+        }
     }
 
     public function chatHere($users){
@@ -144,7 +148,8 @@ class ChatComponent extends Component
     }
 
     public function getActiveUsersProperty($userId){
-        return $this->users->contains($userId[0]->user_id);
+        $valueToCheck = is_int($userId) ? $userId : $userId[0]->user_id;
+        return $this->users->contains($valueToCheck);
     }
 
     public function getUserChat($chat){
